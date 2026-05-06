@@ -5,10 +5,7 @@ import { StatsSection } from "@/components/StatsSection";
 import { CategoryGrid } from "@/components/CategoryGrid";
 import { FeaturedBanner } from "@/components/FeaturedBanner";
 import { ProductsSection } from "@/components/ProductsSection";
-import { AboutSection } from "@/components/AboutSection";
-import { VideosSection } from "@/components/VideosSection";
 import { PhotosSection } from "@/components/PhotosSection";
-import { ShowsSection } from "@/components/ShowsSection";
 import { ContactSection } from "@/components/ContactSection";
 import { Footer } from "@/components/Footer";
 import { CookieBanner } from "@/components/CookieBanner";
@@ -23,10 +20,7 @@ export default function Home() {
         <CategoryGrid />
         <FeaturedBanner />
         <ProductsSection />
-        <AboutSection />
-        <VideosSection />
         <PhotosSection />
-        <ShowsSection />
         <ContactSection />
       </main>
       <Footer />

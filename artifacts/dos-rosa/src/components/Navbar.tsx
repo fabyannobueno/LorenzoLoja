@@ -14,9 +14,7 @@ const LOGO_WEBP = "https://static.wixstatic.com/media/503d91_c7b6678363f848ea973
 const navLinks = [
   { label: "INÍCIO", href: "#inicio" },
   { label: "LOJA", href: "#loja", highlight: true },
-  { label: "SOBRE", href: "#sobre" },
-  { label: "VÍDEOS", href: "#videos" },
-  { label: "SHOWS", href: "#shows" },
+  { label: "FOTOS", href: "#fotos" },
   { label: "CONTATO", href: "#contato" },
 ];
 
