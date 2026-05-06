@@ -57,11 +57,10 @@ export function FeaturedBanner() {
           {/* Image */}
           <div className="order-1 md:order-2 flex justify-center">
             <div className="relative">
-              <div className="absolute inset-0 bg-yellow-400/30 rounded-3xl blur-2xl scale-110" />
               <img
                 src={FEATURED_IMG}
                 alt="MC Lorenzo Moletom"
-                className="relative w-64 md:w-80 lg:w-96 object-cover rounded-3xl shadow-2xl"
+                className="relative w-64 md:w-80 lg:w-96 object-contain"
               />
             </div>
           </div>
