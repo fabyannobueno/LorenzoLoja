@@ -67,7 +67,8 @@ export function HeroSlider() {
   }, [emblaApi, onSelect]);
 
   return (
-    <div id="inicio" className="relative w-full overflow-hidden bg-gray-900 group">
+    <div id="inicio" className="relative w-full bg-gray-900">
+      {/* Carousel viewport */}
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex touch-pan-y">
           {slides.map((slide, index) => (
@@ -87,30 +88,31 @@ export function HeroSlider() {
         </div>
       </div>
 
-      {/* Prev */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-primary rounded-full shadow-lg opacity-0 md:group-hover:opacity-100 transition-opacity h-12 w-12 z-10"
-        onClick={scrollPrev}
-      >
-        <ChevronLeft className="h-8 w-8" />
-        <span className="sr-only">Anterior</span>
-      </Button>
+      {/* Prev / Next overlay */}
+      <div className="absolute inset-0 flex items-center justify-between px-3 md:px-6 pointer-events-none z-20">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="pointer-events-auto bg-white/80 hover:bg-white text-primary rounded-full shadow-lg h-10 w-10 md:h-12 md:w-12"
+          onClick={scrollPrev}
+        >
+          <ChevronLeft className="h-6 w-6 md:h-8 md:w-8" />
+          <span className="sr-only">Anterior</span>
+        </Button>
 
-      {/* Next */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-primary rounded-full shadow-lg opacity-0 md:group-hover:opacity-100 transition-opacity h-12 w-12 z-10"
-        onClick={scrollNext}
-      >
-        <ChevronRight className="h-8 w-8" />
-        <span className="sr-only">Próximo</span>
-      </Button>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="pointer-events-auto bg-white/80 hover:bg-white text-primary rounded-full shadow-lg h-10 w-10 md:h-12 md:w-12"
+          onClick={scrollNext}
+        >
+          <ChevronRight className="h-6 w-6 md:h-8 md:w-8" />
+          <span className="sr-only">Próximo</span>
+        </Button>
+      </div>
 
       {/* Dots */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
         {slides.map((_, index) => (
           <button
             key={index}
