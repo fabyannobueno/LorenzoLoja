@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ShoppingCart, Star, Zap } from "lucide-react";
+import moletomImg from "@assets/moletom_mc_lorenzo.webp";
 
 interface Product {
   id: number;
@@ -8,6 +9,7 @@ interface Product {
   oldPrice?: number;
   emoji: string;
   bg: string;
+  image?: string;
   tag?: string;
   stars: number;
   reviews: number;
@@ -61,6 +63,7 @@ const products: Product[] = [
     oldPrice: 199.90,
     emoji: "🏆",
     bg: "from-indigo-500 to-blue-700",
+    image: moletomImg,
     tag: "OFERTA",
     stars: 5,
     reviews: 76,
@@ -151,11 +154,22 @@ export function ProductsSection() {
                 </div>
               )}
 
-              {/* Image placeholder */}
-              <div className={`bg-gradient-to-br ${p.bg} h-40 md:h-48 flex items-center justify-center`}>
-                <span className="text-6xl md:text-7xl drop-shadow-lg group-hover:scale-110 transition-transform duration-300 select-none">
-                  {p.emoji}
-                </span>
+              {/* Image area — square */}
+              <div className="aspect-square overflow-hidden">
+                {p.image ? (
+                  <img
+                    src={p.image}
+                    alt={p.name}
+                    className="w-full h-full object-contain bg-gray-50 group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className={`bg-gradient-to-br ${p.bg} w-full h-full flex items-center justify-center`}>
+                    <span className="text-6xl md:text-7xl drop-shadow-lg group-hover:scale-110 transition-transform duration-300 select-none">
+                      {p.emoji}
+                    </span>
+                  </div>
+                )}
               </div>
 
               {/* Info */}
