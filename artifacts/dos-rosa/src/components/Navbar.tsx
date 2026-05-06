@@ -9,10 +9,12 @@ import {
 } from "@/components/ui/sheet";
 import { SiInstagram, SiTiktok, SiYoutube, SiSpotify } from "react-icons/si";
 
-import kwaiIconSrc from "@assets/kwai_icon.webp";
-
 function KwaiIcon({ className }: { className?: string }) {
-  return <img src={kwaiIconSrc} alt="Kwai" className={className} style={{ objectFit: "contain" }} />;
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M6.5 4h2.8v7.2L14.8 4h3.3L12 12l6.2 8H15l-5.7-7.8V20H6.5V4z"/>
+    </svg>
+  );
 }
 
 const LOGO_WEBP = "https://static.wixstatic.com/media/503d91_c7b6678363f848ea973886ce8f9491d9~mv2.png/v1/fill/w_900,h_360,al_c,q_85,enc_webp/file.webp";
