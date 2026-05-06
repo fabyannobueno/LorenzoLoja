@@ -78,7 +78,7 @@ export function HeroSlider() {
                   <img
                     src={slide.image}
                     alt={slide.alt}
-                    className="w-full h-full object-cover object-top"
+                    className="block w-full h-full object-cover object-top"
                     loading={index === 0 ? "eager" : "lazy"}
                   />
                 </div>
