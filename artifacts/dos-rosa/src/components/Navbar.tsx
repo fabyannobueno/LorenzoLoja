@@ -28,7 +28,7 @@ const socials = [
 
 export function Navbar() {
   return (
-    <header className="sticky top-0 z-40 w-full bg-white border-b shadow-sm">
+    <header className="sticky top-0 z-40 w-full bg-white shadow-sm">
       <div className="container mx-auto px-4 h-20 flex items-center justify-between gap-4">
 
         {/* Mobile Menu */}
