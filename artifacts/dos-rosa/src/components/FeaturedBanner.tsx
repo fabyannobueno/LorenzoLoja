@@ -1,6 +1,6 @@
 import React from "react";
 import { ShoppingCart, Truck, Shield, RotateCcw } from "lucide-react";
-import FEATURED_IMG from "@assets/Instagram_post_para_loja_de_roupas_corporativo_preto_e_branco__1778078581820.png";
+import FEATURED_IMG from "@assets/moletom_mc_lorenzo.webp";
 
 const perks = [
   { icon: Truck, label: "Frete grátis", sub: "acima de R$ 150" },
