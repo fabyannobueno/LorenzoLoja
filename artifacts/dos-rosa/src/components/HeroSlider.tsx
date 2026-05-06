@@ -51,7 +51,7 @@ export function HeroSlider() {
           {slides.map((slide, index) => (
             <div key={index} className="relative flex-[0_0_100%] min-w-0">
               <a href={slide.link} className="block w-full cursor-pointer">
-                <div className="w-full aspect-[1/1] sm:aspect-[4/3] md:aspect-[21/9] lg:aspect-[3/1] max-h-[620px] overflow-hidden">
+                <div className="w-full h-[200px] sm:h-auto sm:aspect-[4/3] md:aspect-[21/9] lg:aspect-[3/1] md:max-h-[620px] overflow-hidden">
                   <img
                     src={slide.image}
                     alt={slide.alt}
