@@ -2,41 +2,19 @@ import React, { useEffect, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-function wixWebp(filename: string, w: number, h: number) {
-  return `https://static.wixstatic.com/media/${filename}/v1/fill/w_${w},h_${h},al_c,q_85,enc_webp/file.webp`;
-}
+import bannerFreteGratis from "@assets/banner_frete_gratis.webp";
+import bannerLojaRoupas from "@assets/banner_loja_roupas.webp";
 
 const slides = [
   {
-    image: wixWebp("503d91_6da65737d34f4c5d927155666a2ea4fc~mv2.png", 1920, 1080),
-    alt: "MC Lorenzo",
-    link: "#sobre",
+    image: bannerFreteGratis,
+    alt: "Frete Grátis a partir de R$ 350",
+    link: "#loja",
   },
   {
-    image: wixWebp("503d91_b0ca1de8b57743dca914798f62612351~mv2.jpg", 1920, 1080),
-    alt: "MC Lorenzo",
-    link: "#videos",
-  },
-  {
-    image: wixWebp("503d91_d041e52a2ff74e5bb3a1eab057f46607~mv2.jpg", 1920, 1080),
-    alt: "MC Lorenzo",
-    link: "#videos",
-  },
-  {
-    image: wixWebp("503d91_0efc307f92c74803b0dfa876770d62d1~mv2.jpg", 1920, 1080),
-    alt: "MC Lorenzo",
-    link: "#shows",
-  },
-  {
-    image: wixWebp("503d91_6fe42c0b0ed243cfbfba7dff26f3d41e~mv2.jpg", 1920, 1080),
-    alt: "MC Lorenzo",
-    link: "#contato",
-  },
-  {
-    image: wixWebp("503d91_1e35cfae123a46e4bd0959df6748deab~mv2.jpg", 1920, 1080),
-    alt: "MC Lorenzo",
-    link: "#sobre",
+    image: bannerLojaRoupas,
+    alt: "Conforto e estilo juntos em um só lugar",
+    link: "#loja",
   },
 ];
 
@@ -68,7 +46,6 @@ export function HeroSlider() {
 
   return (
     <div id="inicio" className="relative w-full bg-gray-900">
-      {/* Carousel viewport */}
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex touch-pan-y">
           {slides.map((slide, index) => (
@@ -78,7 +55,7 @@ export function HeroSlider() {
                   <img
                     src={slide.image}
                     alt={slide.alt}
-                    className="block w-full h-full object-cover object-top"
+                    className="block w-full h-full object-cover object-center"
                     loading={index === 0 ? "eager" : "lazy"}
                   />
                 </div>
@@ -88,7 +65,6 @@ export function HeroSlider() {
         </div>
       </div>
 
-      {/* Prev / Next overlay */}
       <div className="absolute inset-0 flex items-center justify-between px-3 md:px-6 pointer-events-none z-20">
         <Button
           variant="ghost"
@@ -111,7 +87,6 @@ export function HeroSlider() {
         </Button>
       </div>
 
-      {/* Dots */}
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
         {slides.map((_, index) => (
           <button
