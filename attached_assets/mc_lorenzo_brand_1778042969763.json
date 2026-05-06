@@ -1,0 +1,66 @@
+{
+  "nome": "MC Lorenzo",
+  "logo": "https://static.wixstatic.com/media/503d91_c7b6678363f848ea973886ce8f9491d9~mv2.png",
+  "icon": "https://static.wixstatic.com/media/503d91_c7b6678363f848ea973886ce8f9491d9~mv2.png",
+  "foto_png": "https://static.wixstatic.com/media/503d91_6da65737d34f4c5d927155666a2ea4fc~mv2.png",
+  "fotos": [
+    "https://static.wixstatic.com/media/503d91_b0ca1de8b57743dca914798f62612351~mv2.jpg",
+    "https://static.wixstatic.com/media/503d91_d041e52a2ff74e5bb3a1eab057f46607~mv2.jpg",
+    "https://static.wixstatic.com/media/503d91_0efc307f92c74803b0dfa876770d62d1~mv2.jpg",
+    "https://static.wixstatic.com/media/503d91_6fe42c0b0ed243cfbfba7dff26f3d41e~mv2.jpg",
+    "https://static.wixstatic.com/media/503d91_1e35cfae123a46e4bd0959df6748deab~mv2.jpg",
+    "https://static.wixstatic.com/media/503d91_5fdb1fb80c404f82ae041fde5fbd1d9f~mv2.jpg"
+  ],
+  "redes_sociais": {
+    "Spotify": "https://open.spotify.com/intl-pt/artist/4BJhlwUkAivteWZYr34mAD",
+    "Instagram": "https://instagram.com/mclorenzoofc",
+    "TikTok": "https://tiktok.com/@mclorenzoofc",
+    "YouTube": "https://youtube.com/@mclorenzoofc",
+    "Kwai": "https://kwai.com/@mclorenzo"
+  },
+  "slogan": "O Brabo do TikTok",
+  "sobre": "MC Lorenzo iniciou sua carreira artística em 2020, aos 5 anos de idade, e rapidamente conquistou o público com seu primeiro grande sucesso, \"Não Fica Apaixonadinha\", que ultrapassou a impressionante marca de 200 milhões de visualizações no YouTube.\n\nHoje, aos 10 anos, Lorenzo continua em plena ascensão, acumulando números expressivos em seus lançamentos musicais, com um total de mais de 300 milhões de views em seu canal. O jovem artista já participou de diversos programas de televisão de grande audiência, como Programa Eliana, Rodrigo Faro, Fala Brasil, Balanço Geral, entre outros.\n\nNas redes sociais, MC Lorenzo encanta seguidores de todas as idades ao compartilhar momentos do seu cotidiano com carisma e espontaneidade, fortalecendo a conexão com seu público.\n\nCom um estilo único, Lorenzo se destaca por interpretar músicas infantis com letras leves e apropriadas para crianças, acompanhadas por batidas dançantes e contagiantes que envolvem os pequenos em uma experiência musical divertida e segura. Seu trabalho contribui para o entretenimento infantil com responsabilidade e autenticidade.\n\nNos bastidores, quem coordena sua carreira com dedicação e sensibilidade é sua mãe e empresária, Andressa Souza, responsável por oferecer o suporte necessário tanto na construção de sua identidade artística quanto no seu desenvolvimento pessoal.\n\n\"Minha mãe é demais! Ela cuida de mim e das minhas redes sociais com muito carinho e dedicação.\" — MC Lorenzo\n\nEm seu canal oficial no YouTube, Lorenzo já ultrapassou a marca de 2 milhões de inscritos e, recentemente, recebeu a tão sonhada placa de 1 milhão. A nova meta do artista mirim é ambiciosa: alcançar os 10 milhões de inscritos e consolidar ainda mais seu espaço na cena musical infantil do Brasil.",
+  "cor_principal": "#3B82F6",
+  "hero_background": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1920&h=1080",
+  "videos": [
+    {
+      "id": "lAhDq2nFzdU",
+      "titulo": "MC Lorenzo - Não Fica Apaixonadinha (kondzilla)",
+      "descricao": "",
+      "views": "222M",
+      "publicado": "há 4 anos"
+    },
+    {
+      "id": "k9YufhamtiI",
+      "titulo": "Mc Lorenzo - Não Fica Emocionadinha ( Beco Filmes ) ( Dj Neeh FZR )",
+      "descricao": "",
+      "views": "46.5M",
+      "publicado": "há 2 anos"
+    },
+    {
+      "id": "ue2KpJ7FNxY",
+      "titulo": "MC Lorenzo - Acabou a Relação (KondZilla)",
+      "descricao": "",
+      "views": "37.7M",
+      "publicado": "há 4 anos"
+    },
+    {
+      "id": "WzpWGoFPVso",
+      "titulo": "Mc Lorenzo - Festinha (KondZilla)",
+      "descricao": "",
+      "views": "11.2M",
+      "publicado": "há 3 anos"
+    }
+  ],
+  "eventos": [
+  ],
+  "contato": {
+    "email_comercial": "contato@mclorenzo.com",
+    "whatsapp": "(11) 91608-8221",
+    "email_shows": "shows@mclorenzo.com"
+  },
+  "estatisticas": {
+    "youtube_views": "1B+",
+    "seguidores": "2M+"
+  }
+}

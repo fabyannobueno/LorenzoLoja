@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "DOS ROSA"
+version = "1.0.0"
+id = "artifacts/dos-rosa"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21558
+
+[services.development]
+run = "pnpm --filter @workspace/dos-rosa run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/dos-rosa", "run", "build" ]
+publicDir = "artifacts/dos-rosa/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21558"
+BASE_PATH = "/"
