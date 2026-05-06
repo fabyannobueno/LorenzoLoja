@@ -3,7 +3,7 @@ import { ShoppingCart, Truck, Shield, RotateCcw } from "lucide-react";
 import FEATURED_IMG from "@assets/moletom_mc_lorenzo.webp";
 
 const perks = [
-  { icon: Truck, label: "Frete grátis", sub: "acima de R$ 150" },
+  { icon: Truck, label: "Frete grátis", sub: "acima de R$ 350" },
   { icon: Shield, label: "Compra segura", sub: "pagamento protegido" },
   { icon: RotateCcw, label: "Troca fácil", sub: "em até 30 dias" },
 ];
