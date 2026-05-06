@@ -40,13 +40,13 @@ waitForPort = 8081
 name = "Start application"
 author = "agent"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "PORT=8080 BASE_PATH=/ pnpm --filter @workspace/dos-rosa run dev"
-waitForPort = 8080
-
 [workflows.workflow.metadata]
 outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PORT=21558 BASE_PATH=/ pnpm --filter @workspace/dos-rosa run dev"
+waitForPort = 21558
 
 [agent]
 stack = "PNPM_WORKSPACE"
