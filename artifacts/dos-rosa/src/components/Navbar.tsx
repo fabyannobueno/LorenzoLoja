@@ -8,31 +8,52 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { SiInstagram, SiTiktok, SiYoutube, SiSpotify } from "react-icons/si";
-
-function KwaiIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-      <path d="M6.5 4h2.8v7.2L14.8 4h3.3L12 12l6.2 8H15l-5.7-7.8V20H6.5V4z"/>
-    </svg>
-  );
-}
+import kwaiIconSrc from "@assets/kwai_icon.webp";
 
 const LOGO_WEBP = "https://static.wixstatic.com/media/503d91_c7b6678363f848ea973886ce8f9491d9~mv2.png/v1/fill/w_900,h_360,al_c,q_85,enc_webp/file.webp";
 
 const navLinks = [
   { label: "INÍCIO", href: "#inicio" },
   { label: "LOJA", href: "#loja", highlight: true },
-
   { label: "CONTATO", href: "#contato" },
 ];
 
-const socials = [
-  { icon: SiInstagram, href: "https://instagram.com/mclorenzoofc", label: "Instagram" },
-  { icon: SiTiktok, href: "https://tiktok.com/@mclorenzoofc", label: "TikTok" },
-  { icon: SiYoutube, href: "https://youtube.com/@mclorenzoofc", label: "YouTube" },
-  { icon: SiSpotify, href: "https://open.spotify.com/intl-pt/artist/4BJhlwUkAivteWZYr34mAD", label: "Spotify" },
-  { icon: KwaiIcon, href: "https://kwai.com/@mclorenzo", label: "Kwai" },
+type Social =
+  | { kind: "icon"; icon: React.ElementType; href: string; label: string }
+  | { kind: "img"; src: string; href: string; label: string };
+
+const socials: Social[] = [
+  { kind: "icon", icon: SiInstagram, href: "https://instagram.com/mclorenzoofc", label: "Instagram" },
+  { kind: "icon", icon: SiTiktok, href: "https://tiktok.com/@mclorenzoofc", label: "TikTok" },
+  { kind: "icon", icon: SiYoutube, href: "https://youtube.com/@mclorenzoofc", label: "YouTube" },
+  { kind: "icon", icon: SiSpotify, href: "https://open.spotify.com/intl-pt/artist/4BJhlwUkAivteWZYr34mAD", label: "Spotify" },
+  { kind: "img", src: kwaiIconSrc, href: "https://kwai.com/@mclorenzo", label: "Kwai" },
 ];
+
+function SocialBtn({ social, size }: { social: Social; size: "sm" | "md" }) {
+  const cls = size === "sm" ? "w-9 h-9" : "w-9 h-9";
+  const iconCls = size === "sm" ? "h-4 w-4" : "h-4 w-4";
+
+  return (
+    <a
+      href={social.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`${cls} rounded-full flex items-center justify-center transition-all duration-200 ${
+        social.kind === "img"
+          ? "bg-transparent hover:opacity-80 hover:scale-110"
+          : "bg-primary/10 text-primary hover:bg-primary hover:text-white"
+      }`}
+    >
+      {social.kind === "img" ? (
+        <img src={social.src} alt={social.label} className={iconCls} style={{ objectFit: "contain" }} />
+      ) : (
+        <social.icon className={iconCls} />
+      )}
+      <span className="sr-only">{social.label}</span>
+    </a>
+  );
+}
 
 export function Navbar() {
   return (
@@ -50,11 +71,7 @@ export function Navbar() {
             <SheetContent side="left" className="w-[300px] sm:w-[360px] bg-white p-0">
               <div className="p-4 bg-primary text-white flex items-center justify-center border-b">
                 <div className="h-12 w-12 overflow-hidden flex-shrink-0">
-                  <img
-                    src={LOGO_WEBP}
-                    alt="MC Lorenzo"
-                    className="h-full w-full object-contain"
-                  />
+                  <img src={LOGO_WEBP} alt="MC Lorenzo" className="h-full w-full object-contain" />
                 </div>
               </div>
               <div className="flex flex-col py-4 overflow-y-auto h-[calc(100vh-5rem)]">
@@ -68,12 +85,8 @@ export function Navbar() {
                   </a>
                 ))}
                 <div className="flex gap-4 px-6 pt-6">
-                  {socials.map(({ icon: Icon, href, label }) => (
-                    <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                      className="text-primary hover:text-primary/70 transition-colors">
-                      <Icon className="h-6 w-6" />
-                      <span className="sr-only">{label}</span>
-                    </a>
+                  {socials.map((s) => (
+                    <SocialBtn key={s.label} social={s} size="sm" />
                   ))}
                 </div>
               </div>
@@ -83,11 +96,7 @@ export function Navbar() {
 
         {/* Logo */}
         <a href="#inicio" className="flex-shrink-0 flex items-center">
-          <img
-            src={LOGO_WEBP}
-            alt="MC Lorenzo"
-            className="h-[44px] md:h-[52px] w-auto object-contain"
-          />
+          <img src={LOGO_WEBP} alt="MC Lorenzo" className="h-[44px] md:h-[52px] w-auto object-contain" />
         </a>
 
         {/* Desktop Nav */}
@@ -109,33 +118,15 @@ export function Navbar() {
 
         {/* Right: Social Icons */}
         <div className="hidden xl:flex items-center gap-3 flex-shrink-0">
-          {socials.map(({ icon: Icon, href, label }) => (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-200"
-            >
-              <Icon className="h-4 w-4" />
-              <span className="sr-only">{label}</span>
-            </a>
+          {socials.map((s) => (
+            <SocialBtn key={s.label} social={s} size="md" />
           ))}
         </div>
 
         {/* Mobile Social (compact) */}
         <div className="flex xl:hidden items-center gap-2 flex-shrink-0">
-          {socials.slice(0, 2).map(({ icon: Icon, href, label }) => (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all duration-200"
-            >
-              <Icon className="h-4 w-4" />
-              <span className="sr-only">{label}</span>
-            </a>
+          {socials.slice(0, 2).map((s) => (
+            <SocialBtn key={s.label} social={s} size="sm" />
           ))}
         </div>
       </div>
