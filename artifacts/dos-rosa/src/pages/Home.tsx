@@ -3,6 +3,8 @@ import { Navbar } from "@/components/Navbar";
 import { HeroSlider } from "@/components/HeroSlider";
 import { StatsSection } from "@/components/StatsSection";
 import { CategoryGrid } from "@/components/CategoryGrid";
+import { FeaturedBanner } from "@/components/FeaturedBanner";
+import { ProductsSection } from "@/components/ProductsSection";
 import { AboutSection } from "@/components/AboutSection";
 import { VideosSection } from "@/components/VideosSection";
 import { PhotosSection } from "@/components/PhotosSection";
@@ -19,6 +21,8 @@ export default function Home() {
         <HeroSlider />
         <StatsSection />
         <CategoryGrid />
+        <FeaturedBanner />
+        <ProductsSection />
         <AboutSection />
         <VideosSection />
         <PhotosSection />

@@ -13,6 +13,7 @@ const LOGO_WEBP = "https://static.wixstatic.com/media/503d91_c7b6678363f848ea973
 
 const navLinks = [
   { label: "INÍCIO", href: "#inicio" },
+  { label: "LOJA", href: "#loja", highlight: true },
   { label: "SOBRE", href: "#sobre" },
   { label: "VÍDEOS", href: "#videos" },
   { label: "SHOWS", href: "#shows" },
@@ -88,7 +89,11 @@ export function Navbar() {
             <a
               key={i}
               href={link.href}
-              className="text-sm tracking-widest text-primary hover:text-primary/70 transition-colors uppercase whitespace-nowrap"
+              className={
+                (link as { highlight?: boolean }).highlight
+                  ? "text-sm tracking-widest font-bold bg-yellow-400 text-yellow-900 px-4 py-1.5 rounded-full hover:bg-yellow-500 transition-colors uppercase whitespace-nowrap"
+                  : "text-sm tracking-widest text-primary hover:text-primary/70 transition-colors uppercase whitespace-nowrap"
+              }
             >
               {link.label}
             </a>
