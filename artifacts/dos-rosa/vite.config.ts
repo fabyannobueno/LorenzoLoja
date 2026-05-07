@@ -66,6 +66,14 @@ export default defineConfig({
     fs: {
       strict: true,
     },
+    proxy: {
+      "/api-proxy": {
+        target: "https://api.mclorenzo.com",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api-proxy/, ""),
+        secure: true,
+      },
+    },
   },
   preview: {
     port,

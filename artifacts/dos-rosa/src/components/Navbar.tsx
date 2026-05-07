@@ -1,13 +1,9 @@
 import React from "react";
-import { Link } from "wouter";
-import { Menu } from "lucide-react";
+import { Menu, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { SiInstagram, SiTiktok, SiYoutube, SiSpotify } from "react-icons/si";
+import { useCart } from "@/contexts/CartContext";
 import kwaiIconSrc from "@assets/kwai_icon.webp";
 
 const LOGO_WEBP = "https://static.wixstatic.com/media/503d91_c7b6678363f848ea973886ce8f9491d9~mv2.png/v1/fill/w_900,h_360,al_c,q_85,enc_webp/file.webp";
@@ -31,9 +27,8 @@ const socials: Social[] = [
 ];
 
 function SocialBtn({ social, size }: { social: Social; size: "sm" | "md" }) {
-  const cls = size === "sm" ? "w-9 h-9" : "w-9 h-9";
-  const iconCls = size === "sm" ? "h-4 w-4" : "h-4 w-4";
-
+  const cls = "w-9 h-9";
+  const iconCls = "h-4 w-4";
   return (
     <a
       href={social.href}
@@ -55,6 +50,24 @@ function SocialBtn({ social, size }: { social: Social; size: "sm" | "md" }) {
   );
 }
 
+function CartButton() {
+  const { count, setOpen } = useCart();
+  return (
+    <button
+      onClick={() => setOpen(true)}
+      className="relative flex items-center justify-center w-10 h-10 rounded-full bg-primary text-white hover:bg-primary/90 transition-colors shadow-md"
+      aria-label="Abrir carrinho"
+    >
+      <ShoppingCart className="h-5 w-5" />
+      {count > 0 && (
+        <span className="absolute -top-1 -right-1 bg-yellow-400 text-yellow-900 text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">
+          {count > 9 ? "9+" : count}
+        </span>
+      )}
+    </button>
+  );
+}
+
 export function Navbar() {
   return (
     <header className="sticky top-0 z-40 w-full bg-white shadow-sm">
@@ -70,24 +83,16 @@ export function Navbar() {
             </SheetTrigger>
             <SheetContent side="left" className="w-[300px] sm:w-[360px] bg-white p-0">
               <div className="p-4 bg-primary text-white flex items-center justify-center border-b">
-                <div className="h-12 w-12 overflow-hidden flex-shrink-0">
-                  <img src={LOGO_WEBP} alt="MC Lorenzo" className="h-full w-full object-contain" />
-                </div>
+                <img src={LOGO_WEBP} alt="MC Lorenzo" className="h-12 w-auto object-contain" />
               </div>
               <div className="flex flex-col py-4 overflow-y-auto h-[calc(100vh-5rem)]">
                 {navLinks.map((link, i) => (
-                  <a
-                    key={i}
-                    href={link.href}
-                    className="px-6 py-3 text-sm tracking-wider text-gray-800 hover:text-primary hover:bg-gray-50 border-b border-gray-100 last:border-0"
-                  >
+                  <a key={i} href={link.href} className="px-6 py-3 text-sm tracking-wider text-gray-800 hover:text-primary hover:bg-gray-50 border-b border-gray-100 last:border-0">
                     {link.label}
                   </a>
                 ))}
                 <div className="flex gap-4 px-6 pt-6">
-                  {socials.map((s) => (
-                    <SocialBtn key={s.label} social={s} size="sm" />
-                  ))}
+                  {socials.map((s) => <SocialBtn key={s.label} social={s} size="sm" />)}
                 </div>
               </div>
             </SheetContent>
@@ -106,7 +111,7 @@ export function Navbar() {
               key={i}
               href={link.href}
               className={
-                (link as { highlight?: boolean }).highlight
+                link.highlight
                   ? "text-sm tracking-widest font-bold bg-yellow-400 text-yellow-900 px-4 py-1.5 rounded-full hover:bg-yellow-500 transition-colors uppercase whitespace-nowrap"
                   : "text-sm tracking-widest text-primary hover:text-primary/70 transition-colors uppercase whitespace-nowrap"
               }
@@ -116,18 +121,16 @@ export function Navbar() {
           ))}
         </nav>
 
-        {/* Right: Social Icons */}
+        {/* Right: Socials + Cart */}
         <div className="hidden xl:flex items-center gap-3 flex-shrink-0">
-          {socials.map((s) => (
-            <SocialBtn key={s.label} social={s} size="md" />
-          ))}
+          {socials.map((s) => <SocialBtn key={s.label} social={s} size="md" />)}
+          <CartButton />
         </div>
 
-        {/* Mobile Social (compact) */}
+        {/* Mobile right: cart only */}
         <div className="flex xl:hidden items-center gap-2 flex-shrink-0">
-          {socials.slice(0, 2).map((s) => (
-            <SocialBtn key={s.label} social={s} size="sm" />
-          ))}
+          {socials.slice(0, 2).map((s) => <SocialBtn key={s.label} social={s} size="sm" />)}
+          <CartButton />
         </div>
       </div>
     </header>
