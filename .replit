@@ -75,3 +75,10 @@ externalPort = 3001
 [[ports]]
 localPort = 21558
 externalPort = 3000
+
+[userenv]
+
+[userenv.shared]
+VITE_API_URL = "https://api.mclorenzo.com"
+VITE_FIREBASE_AUTH_DOMAIN = "mc-lorenzo-store.firebaseapp.com"
+VITE_FIREBASE_PROJECT_ID = "mc-lorenzo-store"
