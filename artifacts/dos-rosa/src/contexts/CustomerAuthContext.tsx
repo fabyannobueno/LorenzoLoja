@@ -11,6 +11,7 @@ import {
   type User,
 } from "firebase/auth";
 import { auth } from "@/lib/firebase";
+import { syncCustomer } from "@/lib/publicApi";
 
 interface CustomerAuthContextValue {
   user: User | null;
@@ -29,6 +30,23 @@ interface CustomerAuthContextValue {
 
 const CustomerAuthContext = createContext<CustomerAuthContextValue | null>(null);
 
+async function pushCustomerToApi(user: User, provider = "email") {
+  try {
+    const idToken = await user.getIdToken();
+    await syncCustomer({
+      idToken,
+      firebase_uid: user.uid,
+      name: user.displayName ?? user.email?.split("@")[0] ?? "Cliente",
+      email: user.email!,
+      phone: user.phoneNumber ?? null,
+      photo_url: user.photoURL ?? null,
+      provider,
+    });
+  } catch (err) {
+    console.warn("[auth] syncCustomer falhou (não crítico):", err);
+  }
+}
+
 export function CustomerAuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
@@ -46,16 +64,20 @@ export function CustomerAuthProvider({ children }: { children: React.ReactNode }
   async function signUp(name: string, email: string, password: string) {
     const { user: newUser } = await createUserWithEmailAndPassword(auth, email, password);
     await updateProfile(newUser, { displayName: name });
-    setUser({ ...newUser, displayName: name });
+    const updated = { ...newUser, displayName: name } as User;
+    setUser(updated);
+    await pushCustomerToApi(updated, "email");
   }
 
   async function signIn(email: string, password: string) {
-    await signInWithEmailAndPassword(auth, email, password);
+    const { user: loggedIn } = await signInWithEmailAndPassword(auth, email, password);
+    await pushCustomerToApi(loggedIn, "email");
   }
 
   async function signInWithGoogle() {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    const { user: loggedIn } = await signInWithPopup(auth, provider);
+    await pushCustomerToApi(loggedIn, "google");
   }
 
   async function logout() {

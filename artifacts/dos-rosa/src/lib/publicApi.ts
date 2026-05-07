@@ -2,11 +2,30 @@ import axios from "axios";
 
 export const STORE_SLUG = import.meta.env.VITE_STORE_SLUG ?? "mclorenzo";
 
-const BASE = import.meta.env.DEV
-  ? "/api-proxy/api/v1/public"
-  : (import.meta.env.VITE_API_URL ?? "https://api.mclorenzo.com") + "/api/v1/public";
+const API_ORIGIN = import.meta.env.DEV
+  ? "/api-proxy"
+  : (import.meta.env.VITE_API_URL ?? "https://api.mclorenzo.com");
+
+const BASE = API_ORIGIN + "/api/v1/public";
 
 const publicApi = axios.create({ baseURL: BASE });
+
+const privateApi = axios.create({ baseURL: API_ORIGIN + "/api/v1" });
+
+export async function syncCustomer(params: {
+  idToken: string;
+  firebase_uid: string;
+  name: string;
+  email: string;
+  phone?: string | null;
+  photo_url?: string | null;
+  provider?: string;
+}): Promise<void> {
+  const { idToken, ...body } = params;
+  await privateApi.post("/customers", body, {
+    headers: { Authorization: `Bearer ${idToken}` },
+  });
+}
 
 export interface PublicProduct {
   id: string;
