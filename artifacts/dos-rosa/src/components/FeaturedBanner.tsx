@@ -1,6 +1,9 @@
 import React from "react";
+import { useLocation } from "wouter";
+import { useQuery } from "@tanstack/react-query";
+import { fetchProducts } from "@/lib/publicApi";
 import { ShoppingCart, Truck, Shield, RotateCcw } from "lucide-react";
-import FEATURED_IMG from "@assets/moletom_mc_lorenzo.webp";
+import { useCart } from "@/contexts/CartContext";
 
 const perks = [
   { icon: Truck, label: "Frete grátis", sub: "acima de R$ 350" },
@@ -8,65 +11,106 @@ const perks = [
   { icon: RotateCcw, label: "Troca fácil", sub: "em até 30 dias" },
 ];
 
+function fmt(v: number) {
+  return "R$ " + v.toFixed(2).replace(".", ",");
+}
+
 export function FeaturedBanner() {
+  const { add } = useCart();
+  const [, navigate] = useLocation();
+
+  const { data } = useQuery({
+    queryKey: ["public-products-featured"],
+    queryFn: () => fetchProducts({ limit: 20, page: 1 }),
+    staleTime: 5 * 60 * 1000,
+    retry: false,
+  });
+
+  const featured = data?.products.find((p) => p.is_featured) ?? data?.products[0];
+
+  if (!featured) return null;
+
+  const price = featured.promotional_price ?? featured.sale_price;
+  const hasDiscount =
+    !!featured.promotional_price && featured.promotional_price < featured.sale_price;
+  const discountPct = hasDiscount
+    ? Math.round((1 - featured.promotional_price! / featured.sale_price) * 100)
+    : 0;
+
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 py-16 px-4">
-      {/* Decorative blobs */}
       <div className="absolute -top-20 -left-20 w-72 h-72 bg-yellow-400/20 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-pink-400/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container mx-auto max-w-[1200px] relative z-10">
         <div className="grid md:grid-cols-2 gap-8 items-center">
-          {/* Text */}
           <div className="text-white order-2 md:order-1">
             <span className="inline-block bg-yellow-400 text-yellow-900 text-xs font-bold px-4 py-1 rounded-full mb-6 uppercase tracking-widest animate-bounce">
-              🔥 Lançamento da Semana!
+              🔥 {featured.is_featured ? "Destaque da Semana!" : "Lançamento!"}
             </span>
             <h2
-              className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-4"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4"
               style={{ fontFamily: "'Bubblegum Sans', cursive" }}
             >
-              Moletom<br />
-              <span className="text-yellow-400">Exclusivo</span><br />
-              Lorenzo!
+              {featured.name}
             </h2>
-            <p className="text-blue-200 text-lg mb-6 max-w-sm">
-              O moletom mais top do Brasil chegou! Edição limitada com bordado exclusivo. 🎤
-            </p>
+            {featured.description && (
+              <p className="text-blue-200 text-lg mb-6 max-w-sm line-clamp-3">
+                {featured.description}
+              </p>
+            )}
 
             <div className="flex items-baseline gap-3 mb-8">
-              <span className="text-blue-300 line-through text-xl">R$ 199,90</span>
+              {hasDiscount && (
+                <span className="text-blue-300 line-through text-xl">{fmt(featured.sale_price)}</span>
+              )}
               <span
                 className="text-white text-4xl font-bold"
                 style={{ fontFamily: "'Bubblegum Sans', cursive" }}
               >
-                R$ 149,90
+                {fmt(price)}
               </span>
-              <span className="bg-red-500 text-white text-sm font-bold px-2 py-0.5 rounded-lg">-25%</span>
+              {hasDiscount && (
+                <span className="bg-red-500 text-white text-sm font-bold px-2 py-0.5 rounded-lg">
+                  -{discountPct}%
+                </span>
+              )}
             </div>
 
-            <button
-              className="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold text-xl px-10 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 active:scale-95 flex items-center gap-3"
-              style={{ fontFamily: "'Bubblegum Sans', cursive" }}
-            >
-              <ShoppingCart className="h-5 w-5" />
-              Quero o meu!
-            </button>
+            <div className="flex flex-wrap gap-3">
+              <button
+                onClick={() => add(featured)}
+                className="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 font-bold text-lg px-8 py-3.5 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 active:scale-95 flex items-center gap-3"
+                style={{ fontFamily: "'Bubblegum Sans', cursive" }}
+              >
+                <ShoppingCart className="h-5 w-5" />
+                Quero o meu!
+              </button>
+              <button
+                onClick={() => navigate(`/produto/${featured.id}`)}
+                className="border-2 border-white/50 text-white font-bold text-lg px-8 py-3.5 rounded-full hover:bg-white/10 transition-all duration-300 active:scale-95"
+                style={{ fontFamily: "'Bubblegum Sans', cursive" }}
+              >
+                Ver detalhes
+              </button>
+            </div>
           </div>
 
-          {/* Image */}
           <div className="order-1 md:order-2 flex justify-center">
-            <div className="relative">
+            {featured.image_url ? (
               <img
-                src={FEATURED_IMG}
-                alt="MC Lorenzo Moletom"
-                className="relative w-64 md:w-80 lg:w-96 object-contain"
+                src={featured.image_url}
+                alt={featured.name}
+                className="relative w-64 md:w-80 lg:w-96 object-contain drop-shadow-2xl"
               />
-            </div>
+            ) : (
+              <div className="w-64 md:w-80 lg:w-96 aspect-square rounded-3xl bg-white/10 flex items-center justify-center">
+                <ShoppingCart className="h-24 w-24 text-white/30" />
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Perks bar */}
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4">
           {perks.map(({ icon: Icon, label, sub }, i) => (
             <div

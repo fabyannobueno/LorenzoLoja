@@ -17,11 +17,6 @@ export default function Home() {
   function handleSelectCategory(id: string | null, name: string) {
     setSelectedCategory(id);
     setSelectedCategoryName(name);
-    if (id) {
-      setTimeout(() => {
-        document.getElementById("loja")?.scrollIntoView({ behavior: "smooth" });
-      }, 100);
-    }
   }
 
   return (
@@ -37,7 +32,7 @@ export default function Home() {
         <FeaturedBanner />
         <ProductsSection
           categoryId={selectedCategory}
-          categoryName={selectedCategoryName}
+          categoryName={selectedCategoryName || undefined}
         />
         <ContactSection />
       </main>

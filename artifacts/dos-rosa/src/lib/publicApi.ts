@@ -13,11 +13,14 @@ export interface PublicProduct {
   name: string;
   description?: string;
   image_url?: string;
+  images?: string[];
   sale_price: number;
   promotional_price?: number;
   is_featured: boolean;
   category_id?: string;
   category?: { id: string; name: string };
+  stock?: number;
+  sku?: string;
 }
 
 export interface PublicCategory {
@@ -59,35 +62,44 @@ export async function fetchProducts(params?: {
   limit?: number;
   page?: number;
 }): Promise<{ products: PublicProduct[]; total: number; totalPages: number }> {
-  try {
-    const p = new URLSearchParams({
-      limit: String(params?.limit ?? 20),
-      page: String(params?.page ?? 1),
-    });
-    if (params?.category_id) p.set("category_id", params.category_id);
-    const { data } = await publicApi.get<{
-      success: boolean;
-      data: PublicProduct[];
-      pagination: any;
-    }>(`/stores/${STORE_SLUG}/products?${p}`);
-    return data.success
-      ? { products: data.data, total: data.pagination?.total ?? 0, totalPages: data.pagination?.totalPages ?? 1 }
-      : { products: [], total: 0, totalPages: 1 };
-  } catch { return { products: [], total: 0, totalPages: 1 }; }
+  const p = new URLSearchParams({
+    limit: String(params?.limit ?? 20),
+    page: String(params?.page ?? 1),
+  });
+  if (params?.category_id) p.set("category_id", params.category_id);
+  const { data } = await publicApi.get<{
+    success: boolean;
+    data: PublicProduct[];
+    pagination: any;
+  }>(`/stores/${STORE_SLUG}/products?${p}`);
+  if (!data.success) return { products: [], total: 0, totalPages: 1 };
+  return {
+    products: data.data,
+    total: data.pagination?.total ?? 0,
+    totalPages: data.pagination?.totalPages ?? 1,
+  };
+}
+
+export async function fetchProduct(id: string): Promise<PublicProduct> {
+  const { data } = await publicApi.get<{ success: boolean; data: PublicProduct }>(
+    `/stores/${STORE_SLUG}/products/${id}`
+  );
+  if (!data.success) throw new Error("Produto não encontrado");
+  return data.data;
 }
 
 export async function fetchCategories(): Promise<PublicCategory[]> {
-  try {
-    const { data } = await publicApi.get<{ success: boolean; data: PublicCategory[] }>(`/stores/${STORE_SLUG}/categories`);
-    return data.success ? data.data : [];
-  } catch { return []; }
+  const { data } = await publicApi.get<{ success: boolean; data: PublicCategory[] }>(
+    `/stores/${STORE_SLUG}/categories`
+  );
+  return data.success ? data.data : [];
 }
 
 export async function fetchBanners(): Promise<PublicBanner[]> {
-  try {
-    const { data } = await publicApi.get<{ success: boolean; data: PublicBanner[] }>(`/stores/${STORE_SLUG}/banners`);
-    return data.success ? data.data : [];
-  } catch { return []; }
+  const { data } = await publicApi.get<{ success: boolean; data: PublicBanner[] }>(
+    `/stores/${STORE_SLUG}/banners`
+  );
+  return data.success ? data.data : [];
 }
 
 export async function validateCoupon(
